@@ -4,13 +4,15 @@ export class TouchElement
 {
     protected element: any;
     protected emitter: Emitter;
-    protected touch: any = null;
+    protected touch: TouchEvent;
 
     constructor(element: any, emitter: Emitter)
     {
         this.element = element;
         this.emitter = emitter;
-        this.element.addEventListener('touchstart', this.setTouch.bind(this));
+        this.element.addEventListener('touchstart', (event: TouchEvent) => {
+            this.touch = event;
+        });
         this.element.addEventListener('touchend', () => {
             this.touch = null;
         });
@@ -22,28 +24,27 @@ export class TouchElement
         return this.emitter;
     }
 
-    protected setTouch(event: any): void
+    protected getFingerPosition(event: TouchEvent): any
     {
-        this.touch = {
-            position: {
-                x: event.changedTouches[0].pageX,
-                y: event.changedTouches[0].pageY
-            }
+        return {
+            x: event.changedTouches[0].clientX,
+            y: event.changedTouches[0].clientY
         };
     }
 
-    protected onMove(event: any): void
+    protected onMove(event: TouchEvent): void
     {
         if (!this.touch) {
             return;
         }
 
-        let prevTouch: any = this.touch;
-        this.setTouch(event);
+        let lastPosition: any = this.getFingerPosition(this.touch);
+        let currentPosition: any = this.getFingerPosition(event);
         let diff = {
-            horizontal: prevTouch.position.x - this.touch.position.x,
-            vertical: prevTouch.position.y - this.touch.position.y,
+            horizontal: lastPosition.x - currentPosition.x,
+            vertical: lastPosition.y - currentPosition.y,
         }
-        this.emitter.emit('touchScroll', diff);
+        this.touch = event;
+        this.emitter.emit('wbTouchscroll', diff);
     }
 }
