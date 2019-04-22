@@ -49,6 +49,7 @@ export class TouchComponent implements Component
         let diff = {
             horizontal: lastPosition.x - currentPosition.x,
             vertical: lastPosition.y - currentPosition.y,
+            touchEvent: event
         }
         this.touch = event;
         this.emitter.emit('wbTouchscroll', diff);

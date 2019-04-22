@@ -34,14 +34,10 @@ test("", () => {
     let element: HTMLElement = domService.create('<div></div>');
     domService.insert([element], document.body);
     let touchComponent: TouchComponent = new TouchComponent(element, emitterService.createEmitter());
-    let value: any = {
-        vertical: 0,
-        horizontal: 0
-    };
+    let touchEvent: any = null;
 
     touchComponent.getEmitter().on('wbTouchscroll', (data: any) => {
-        value.vertical += data.vertical;
-        value.horizontal += data.horizontal;
+        touchEvent = data;
     });
     element.dispatchEvent(new TouchEvent('touchstart', {
         changedTouches: [
@@ -54,8 +50,13 @@ test("", () => {
         ]
     }));
 
-    expect(value).toEqual({
+    expect(touchEvent).toEqual({
         vertical: -13,
-        horizontal: -22
+        horizontal: -22,
+        touchEvent: new TouchEvent('touchmove', {
+            changedTouches: [
+                touchEventPosition(22, 13)
+            ]
+        })
     });
 });
