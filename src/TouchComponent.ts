@@ -1,12 +1,13 @@
 import { Emitter } from "@wildebeest/common";
+import { Component } from "@wildebeest/component";
 
-export class TouchElement
+export class TouchComponent implements Component
 {
-    protected element: any;
+    protected element: HTMLElement;
     protected emitter: Emitter;
     protected touch: TouchEvent;
 
-    constructor(element: any, emitter: Emitter)
+    constructor(element: HTMLElement, emitter: Emitter)
     {
         this.element = element;
         this.emitter = emitter;
@@ -22,6 +23,11 @@ export class TouchElement
     public getEmitter(): Emitter
     {
         return this.emitter;
+    }
+
+    getElement(): HTMLElement
+    {
+        return this.element;
     }
 
     protected getFingerPosition(event: TouchEvent): any

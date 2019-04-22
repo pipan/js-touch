@@ -1,7 +1,7 @@
 import 'ts-jest';
 import { Application } from '@wildebeest/js-modules';
 import { TouchModule } from '../src/TouchModule';
-import { TouchElement } from '../src/TouchElement';
+import { TouchComponent } from '../src/TouchComponent';
 import { DomService, EmitterService } from '@wildebeest/common';
 
 let app: Application = new Application();
@@ -33,13 +33,13 @@ function touchEventPosition(x: number, y: number): any
 test("", () => {
     let element: HTMLElement = domService.create('<div></div>');
     domService.insert([element], document.body);
-    let touchElement: TouchElement = new TouchElement(element, emitterService.createEmitter());
+    let touchComponent: TouchComponent = new TouchComponent(element, emitterService.createEmitter());
     let value: any = {
         vertical: 0,
         horizontal: 0
     };
 
-    touchElement.getEmitter().on('wbTouchscroll', (data: any) => {
+    touchComponent.getEmitter().on('wbTouchscroll', (data: any) => {
         value.vertical += data.vertical;
         value.horizontal += data.horizontal;
     });

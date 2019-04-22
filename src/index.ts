@@ -1,2 +1,2 @@
 export { TouchModule } from './TouchModule';
-export { TouchElement } from './TouchElement';
+export { TouchComponent } from './TouchComponent';
