@@ -7,22 +7,29 @@
   "scripts": {
     "build": "tsc --declaration",
     "test": "jest",
-    "deploy": "npm run test && npm run build && git add -A && git commit -m 'deploy' && git push origin master"
+    "deploy": "npm run test && npm run build && git add -A && git commit -m 'build and deploy' && git push origin master",
+    "patch": "npm run deploy && npm version patch && npm publish",
+    "minor": "npm run deploy && npm version minor && npm publish",
+    "major": "npm run deploy && npm version major && npm publish"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/pipan/js-touch.git"
   },
-  "dependencies": {
+  "peerDependencies": {
     "@wildebeest/js-modules": "^0.1.0",
     "@wildebeest/common": "^0.2.0",
-    "@wildebeest/component": "^0.1.0"
+    "@wildebeest/component": "^0.2.0"
   },
   "devDependencies": {
-    "@types/jest": "^24.0.11",
-    "jest": "^24.7.1",
+    "@types/jest": "^24.0.12",
+    "inversify": "^5.0.1",
+    "@wildebeest/js-modules": "^0.1.0",
+    "@wildebeest/common": "^0.2.0",
+    "@wildebeest/component": "^0.2.0",
+    "jest": "^24.8.0",
     "ts-jest": "^24.0.2",
-    "typescript": "^3.4.3"
+    "typescript": "^3.4.5"
   },
   "keywords": [
     "js",
